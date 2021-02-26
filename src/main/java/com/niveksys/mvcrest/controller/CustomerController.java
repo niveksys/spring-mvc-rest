@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +28,20 @@ public class CustomerController {
 
     @GetMapping({ "", "/" })
     public ResponseEntity<CustomerListDto> list() {
-        log.debug("LIST all the customers.");
+        log.debug("LIST all customers.");
         return new ResponseEntity<CustomerListDto>(new CustomerListDto(this.customerService.findAll()), HttpStatus.OK);
 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> show(@PathVariable Long id) {
-        log.debug("SHOW a customer by id.");
+        log.debug("GET a customer by id: " + id);
         return new ResponseEntity<CustomerDto>(this.customerService.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping({ "", "/" })
+    public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto customerDto) {
+        log.debug("CREATE a new customer.");
+        return new ResponseEntity<CustomerDto>(customerService.create(customerDto), HttpStatus.CREATED);
     }
 }

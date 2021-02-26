@@ -1,6 +1,7 @@
 package com.niveksys.mvcrest.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -77,5 +78,27 @@ public class CustomerServiceImplTests {
 
         // then
         assertEquals(FIRSTNAME1, customerDto.getFirstname());
+    }
+
+    @Test
+    public void create() throws Exception {
+        // given
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setFirstname(FIRSTNAME1);
+        customerDto.setLastname(LASTNAME1);
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setId(ID1);
+        savedCustomer.setFirstname(customerDto.getFirstname());
+        savedCustomer.setLastname(customerDto.getLastname());
+
+        when(this.customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        // when
+        CustomerDto savedDto = this.customerService.create(customerDto);
+
+        // then
+        assertEquals(customerDto.getFirstname(), savedDto.getFirstname());
+        assertEquals("/api/customers/" + ID1, savedDto.getCustomerUrl());
     }
 }

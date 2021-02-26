@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.niveksys.mvcrest.dto.CustomerDto;
 import com.niveksys.mvcrest.mapper.CustomerMapper;
+import com.niveksys.mvcrest.model.Customer;
 import com.niveksys.mvcrest.repository.CustomerRepository;
 
 import org.springframework.stereotype.Service;
@@ -36,6 +37,15 @@ public class CustomerServiceImpl implements CustomerService {
             customerDto.setCustomerUrl("/api/customers/" + customer.getId());
             return customerDto;
         }).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public CustomerDto create(CustomerDto customerDto) {
+        Customer customer = customerMapper.customerDtoToCustomer(customerDto);
+        Customer savedCustomer = customerRepository.save(customer);
+        CustomerDto returnDto = customerMapper.customerToCustomerDto(savedCustomer);
+        returnDto.setCustomerUrl("/api/customers/" + savedCustomer.getId());
+        return returnDto;
     }
 
 }
