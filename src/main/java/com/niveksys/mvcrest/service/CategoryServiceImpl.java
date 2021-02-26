@@ -28,7 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto findByName(String name) {
-        return this.categoryMapper.categoryToCategoryDto(this.categoryRepository.findByNameIgnoreCase(name));
+        return this.categoryRepository.findByNameIgnoreCase(name).map(this.categoryMapper::categoryToCategoryDto)
+                .orElseThrow(RuntimeException::new);
     }
 
 }

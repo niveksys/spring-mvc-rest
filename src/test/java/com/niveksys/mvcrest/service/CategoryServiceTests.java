@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.niveksys.mvcrest.dto.CategoryDto;
 import com.niveksys.mvcrest.mapper.CategoryMapper;
@@ -53,7 +54,7 @@ public class CategoryServiceTests {
         category.setId(ID);
         category.setName(NAME);
 
-        when(this.categoryRepository.findByNameIgnoreCase(anyString())).thenReturn(category);
+        when(this.categoryRepository.findByNameIgnoreCase(anyString())).thenReturn(Optional.of(category));
 
         // when
         CategoryDto categoryDto = categoryService.findByName(NAME);
