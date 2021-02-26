@@ -53,7 +53,7 @@ public class CategoryServiceTests {
         category.setId(ID);
         category.setName(NAME);
 
-        when(this.categoryRepository.findByName(anyString())).thenReturn(category);
+        when(this.categoryRepository.findByNameIgnoreCase(anyString())).thenReturn(category);
 
         // when
         CategoryDto categoryDto = categoryService.findByName(NAME);

@@ -7,6 +7,9 @@ import com.niveksys.mvcrest.dto.CategoryDto;
 import com.niveksys.mvcrest.mapper.CategoryMapper;
 import com.niveksys.mvcrest.repository.CategoryRepository;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -25,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto findByName(String name) {
-        return this.categoryMapper.categoryToCategoryDto(this.categoryRepository.findByName(name));
+        return this.categoryMapper.categoryToCategoryDto(this.categoryRepository.findByNameIgnoreCase(name));
     }
 
 }
