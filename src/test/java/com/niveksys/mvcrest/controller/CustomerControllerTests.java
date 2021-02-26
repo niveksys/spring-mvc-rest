@@ -2,10 +2,12 @@ package com.niveksys.mvcrest.controller;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,6 +99,28 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
                 .perform(post("/api/customers/").contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customerDto)))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME1)))
+                .andExpect(jsonPath("$.customer_url", equalTo("/api/customers/" + ID1)));
+    }
+
+    @Test
+    public void update() throws Exception {
+        // given
+        CustomerDto customer = new CustomerDto();
+        customer.setFirstname(FIRSTNAME1);
+        customer.setLastname(LASTNAME1);
+
+        CustomerDto returnDTO = new CustomerDto();
+        returnDTO.setFirstname(customer.getFirstname());
+        returnDTO.setLastname(customer.getLastname());
+        returnDTO.setCustomerUrl("/api/customers/" + ID1);
+
+        when(customerService.update(anyLong(), any(CustomerDto.class))).thenReturn(returnDTO);
+
+        // when & then
+        mockMvc.perform(
+                put("/api/customers/" + ID1).contentType(MediaType.APPLICATION_JSON).content(asJsonString(customer)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME1)))
+                .andExpect(jsonPath("$.lastname", equalTo(LASTNAME1)))
                 .andExpect(jsonPath("$.customer_url", equalTo("/api/customers/" + ID1)));
     }
 }
