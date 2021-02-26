@@ -1,9 +1,9 @@
-package com.niveksys.mvcrest.api.dto;
+package com.niveksys.mvcrest.dto;
 
 import lombok.Data;
 
 @Data
-public class CategoryDTO {
+public class CategoryDto {
     private Long id;
     private String name;
 }
