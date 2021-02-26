@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 public class CategoryMapperTests {
 
-    public static final String NAME = "Joe";
-    public static final long ID = 1L;
+    public static final Long ID = 1L;
+    public static final String NAME = "Fruits";
 
     CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
 
