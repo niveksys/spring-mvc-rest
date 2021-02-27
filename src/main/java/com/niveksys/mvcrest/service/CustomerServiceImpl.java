@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl("/api/customers/" + customer.getId());
             return customerDto;
-        }).orElseThrow(RuntimeException::new);
+        }).orElseThrow(RuntimeException::new); // todo implement better exception handling
     }
 
     @Override
@@ -57,5 +57,18 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerDto returnDto = this.customerMapper.customerToCustomerDto(savedCustomer);
         returnDto.setCustomerUrl("/api/customers/" + savedCustomer.getId());
         return returnDto;
+    }
+
+    @Override
+    public CustomerDto patch(Long id, CustomerDto customerDto) {
+        return this.customerRepository.findById(id).map(customer -> {
+            if (customerDto.getFirstname() != null) {
+                customer.setFirstname(customerDto.getFirstname());
+            }
+            if (customerDto.getLastname() != null) {
+                customer.setLastname(customerDto.getLastname());
+            }
+            return this.saveAndReturnDto(customer);
+        }).orElseThrow(RuntimeException::new); // todo implement better exception handling;
     }
 }
