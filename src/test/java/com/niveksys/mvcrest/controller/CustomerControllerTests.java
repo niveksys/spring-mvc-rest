@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 import com.niveksys.mvcrest.dto.CustomerDto;
 import com.niveksys.mvcrest.service.CustomerService;
+import com.niveksys.mvcrest.service.ResourceNotFoundException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -153,5 +154,14 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         mockMvc.perform(delete(CustomerController.BASE_URL + "/" + ID1).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(customerService).deleteCustomerById(anyLong());
+    }
+
+    @Test
+    public void showCustomerNotFound() throws Exception {
+        // given
+        when(customerService.findCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+        // when
+        mockMvc.perform(get(CustomerController.BASE_URL + "/222").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

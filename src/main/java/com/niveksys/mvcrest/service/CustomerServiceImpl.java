@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));
             return customerDto;
-        }).orElseThrow(RuntimeException::new); // todo implement better exception handling
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastname(customerDto.getLastname());
             }
             return this.saveAndReturnDto(customer);
-        }).orElseThrow(RuntimeException::new); // todo implement better exception handling;
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override

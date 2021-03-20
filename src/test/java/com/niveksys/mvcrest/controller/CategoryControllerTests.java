@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.niveksys.mvcrest.dto.CategoryDto;
 import com.niveksys.mvcrest.service.CategoryService;
+import com.niveksys.mvcrest.service.ResourceNotFoundException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,5 +71,14 @@ public class CategoryControllerTests {
         // then
         mockMvc.perform(get(CategoryController.BASE_URL + "/" + NAME1).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.name", equalTo(NAME1)));
+    }
+
+    @Test
+    public void testGetByNameNotFound() throws Exception {
+        // given
+        when(this.categoryService.findCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(CategoryController.BASE_URL + "/Foo").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
