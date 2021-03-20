@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,7 +74,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customer.setLastname(LASTNAME1);
         customer.setCustomerUrl("/api/customers/" + ID1);
 
-        when(customerService.findById(anyLong())).thenReturn(customer);
+        when(this.customerService.findById(anyLong())).thenReturn(customer);
 
         // when & then
         this.mockMvc.perform(get("/api/customers/" + ID1).contentType(MediaType.APPLICATION_JSON))
@@ -87,12 +88,12 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customerDto.setFirstname(FIRSTNAME1);
         customerDto.setLastname(LASTNAME1);
 
-        CustomerDto returnDTO = new CustomerDto();
-        returnDTO.setFirstname(customerDto.getFirstname());
-        returnDTO.setLastname(customerDto.getLastname());
-        returnDTO.setCustomerUrl("/api/customers/" + ID1);
+        CustomerDto returnDto = new CustomerDto();
+        returnDto.setFirstname(customerDto.getFirstname());
+        returnDto.setLastname(customerDto.getLastname());
+        returnDto.setCustomerUrl("/api/customers/" + ID1);
 
-        when(this.customerService.create(customerDto)).thenReturn(returnDTO);
+        when(this.customerService.create(customerDto)).thenReturn(returnDto);
 
         // when & then
         this.mockMvc
@@ -109,12 +110,12 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customer.setFirstname(FIRSTNAME1);
         customer.setLastname(LASTNAME1);
 
-        CustomerDto returnDTO = new CustomerDto();
-        returnDTO.setFirstname(customer.getFirstname());
-        returnDTO.setLastname(customer.getLastname());
-        returnDTO.setCustomerUrl("/api/customers/" + ID1);
+        CustomerDto returnDto = new CustomerDto();
+        returnDto.setFirstname(customer.getFirstname());
+        returnDto.setLastname(customer.getLastname());
+        returnDto.setCustomerUrl("/api/customers/" + ID1);
 
-        when(customerService.update(anyLong(), any(CustomerDto.class))).thenReturn(returnDTO);
+        when(this.customerService.update(anyLong(), any(CustomerDto.class))).thenReturn(returnDto);
 
         // when & then
         mockMvc.perform(
@@ -122,5 +123,26 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
                 .andExpect(status().isOk()).andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME1)))
                 .andExpect(jsonPath("$.lastname", equalTo(LASTNAME1)))
                 .andExpect(jsonPath("$.customer_url", equalTo("/api/customers/" + ID1)));
+    }
+
+    @Test
+    public void testPatchCustomer() throws Exception {
+        // given
+        CustomerDto customer = new CustomerDto();
+        customer.setFirstname(FIRSTNAME1);
+
+        CustomerDto returnDto = new CustomerDto();
+        returnDto.setFirstname(customer.getFirstname());
+        returnDto.setLastname(LASTNAME1);
+        returnDto.setCustomerUrl("/api/customers/1");
+
+        when(this.customerService.patch(anyLong(), any(CustomerDto.class))).thenReturn(returnDto);
+
+        // when & then
+        mockMvc.perform(
+                patch("/api/customers/" + ID1).contentType(MediaType.APPLICATION_JSON).content(asJsonString(customer)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME1)))
+                .andExpect(jsonPath("$.lastname", equalTo(LASTNAME1)))
+                .andExpect(jsonPath("$.customer_url", equalTo("/api/customers/1")));
     }
 }

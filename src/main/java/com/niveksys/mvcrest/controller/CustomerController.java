@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -50,5 +51,10 @@ public class CustomerController {
     public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
         log.debug("UPDATE a customer with id: " + id);
         return new ResponseEntity<CustomerDto>(this.customerService.update(id, customerDto), HttpStatus.OK);
+    }
+
+    @PatchMapping({ "/{id}" })
+    public ResponseEntity<CustomerDto> patchCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
+        return new ResponseEntity<CustomerDto>(this.customerService.patch(id, customerDto), HttpStatus.OK);
     }
 }
