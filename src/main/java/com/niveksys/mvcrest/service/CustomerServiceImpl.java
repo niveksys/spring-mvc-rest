@@ -3,6 +3,7 @@ package com.niveksys.mvcrest.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.niveksys.mvcrest.controller.CustomerController;
 import com.niveksys.mvcrest.dto.CustomerDto;
 import com.niveksys.mvcrest.mapper.CustomerMapper;
 import com.niveksys.mvcrest.model.Customer;
@@ -25,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDto> findAllCustomers() {
         return this.customerRepository.findAll().stream().map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
-            customerDto.setCustomerUrl("/api/customers/" + customer.getId());
+            customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));
             return customerDto;
         }).collect(Collectors.toList());
     }
@@ -34,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto findCustomerById(Long id) {
         return this.customerRepository.findById(id).map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
-            customerDto.setCustomerUrl("/api/customers/" + customer.getId());
+            customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));
             return customerDto;
         }).orElseThrow(RuntimeException::new); // todo implement better exception handling
     }
@@ -55,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDto saveAndReturnDto(Customer customer) {
         Customer savedCustomer = this.customerRepository.save(customer);
         CustomerDto returnDto = this.customerMapper.customerToCustomerDto(savedCustomer);
-        returnDto.setCustomerUrl("/api/customers/" + savedCustomer.getId());
+        returnDto.setCustomerUrl(this.getCustomerUrl(savedCustomer.getId()));
         return returnDto;
     }
 
@@ -75,5 +76,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomerById(Long id) {
         this.customerRepository.deleteById(id);
+    }
+
+    private String getCustomerUrl(Long id) {
+        return CustomerController.BASE_URL + "/" + id;
     }
 }

@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.niveksys.mvcrest.controller.CustomerController;
 import com.niveksys.mvcrest.dto.CustomerDto;
 import com.niveksys.mvcrest.mapper.CustomerMapper;
 import com.niveksys.mvcrest.model.Customer;
@@ -101,7 +102,7 @@ public class CustomerServiceImplTests {
 
         // then
         assertEquals(customerDto.getFirstname(), savedDto.getFirstname());
-        assertEquals("/api/customers/" + ID1, savedDto.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL + "/" + ID1, savedDto.getCustomerUrl());
     }
 
     @Test
@@ -115,21 +116,21 @@ public class CustomerServiceImplTests {
         savedCustomer.setLastname(customerDto.getLastname());
         savedCustomer.setId(1l);
 
-        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+        when(this.customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
         // when
-        CustomerDto savedDto = customerService.updateCustomer(ID1, customerDto);
+        CustomerDto savedDto = this.customerService.updateCustomer(ID1, customerDto);
 
         // then
         assertEquals(customerDto.getFirstname(), savedDto.getFirstname());
-        assertEquals("/api/customers/" + ID1, savedDto.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL + "/" + ID1, savedDto.getCustomerUrl());
     }
 
     @Test
     public void deleteCustomerById() throws Exception {
         // when
-        customerRepository.deleteById(ID1);
+        this.customerService.deleteCustomerById(ID1);
         // then
-        verify(customerRepository, times(1)).deleteById(anyLong());
+        verify(this.customerRepository, times(1)).deleteById(anyLong());
     }
 }
