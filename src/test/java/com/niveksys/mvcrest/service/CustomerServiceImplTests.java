@@ -3,6 +3,8 @@ package com.niveksys.mvcrest.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -42,7 +44,7 @@ public class CustomerServiceImplTests {
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAllCustomers() throws Exception {
         // given
         Customer customer1 = new Customer();
         customer1.setId(ID1);
@@ -57,14 +59,14 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when
-        List<CustomerDto> customerDtoList = this.customerService.findAll();
+        List<CustomerDto> customerDtoList = this.customerService.findAllCustomers();
 
         // then
         assertEquals(2, customerDtoList.size());
     }
 
     @Test
-    public void findById() throws Exception {
+    public void findCustomerById() throws Exception {
         // given
         Customer customer = new Customer();
         customer.setId(ID1);
@@ -74,14 +76,14 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(customer));
 
         // when
-        CustomerDto customerDto = this.customerService.findById(ID1);
+        CustomerDto customerDto = this.customerService.findCustomerById(ID1);
 
         // then
         assertEquals(FIRSTNAME1, customerDto.getFirstname());
     }
 
     @Test
-    public void create() throws Exception {
+    public void createCustomer() throws Exception {
         // given
         CustomerDto customerDto = new CustomerDto();
         customerDto.setFirstname(FIRSTNAME1);
@@ -95,7 +97,7 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
         // when
-        CustomerDto savedDto = this.customerService.create(customerDto);
+        CustomerDto savedDto = this.customerService.createCustomer(customerDto);
 
         // then
         assertEquals(customerDto.getFirstname(), savedDto.getFirstname());
@@ -103,7 +105,7 @@ public class CustomerServiceImplTests {
     }
 
     @Test
-    public void update() throws Exception {
+    public void updateCustomer() throws Exception {
         // given
         CustomerDto customerDto = new CustomerDto();
         customerDto.setFirstname(FIRSTNAME1);
@@ -116,10 +118,18 @@ public class CustomerServiceImplTests {
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
         // when
-        CustomerDto savedDto = customerService.update(ID1, customerDto);
+        CustomerDto savedDto = customerService.updateCustomer(ID1, customerDto);
 
         // then
         assertEquals(customerDto.getFirstname(), savedDto.getFirstname());
         assertEquals("/api/customers/" + ID1, savedDto.getCustomerUrl());
+    }
+
+    @Test
+    public void deleteCustomerById() throws Exception {
+        // when
+        customerRepository.deleteById(ID1);
+        // then
+        verify(customerRepository, times(1)).deleteById(anyLong());
     }
 }

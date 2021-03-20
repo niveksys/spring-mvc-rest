@@ -35,20 +35,20 @@ public class CategoryServiceTests {
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAllCategories() throws Exception {
         // given
         List<Category> categories = Arrays.asList(new Category(), new Category(), new Category());
         when(this.categoryRepository.findAll()).thenReturn(categories);
 
         // when
-        List<CategoryDto> categoryDtoList = categoryService.findAll();
+        List<CategoryDto> categoryDtoList = categoryService.findAllCategories();
 
         // then
         assertEquals(3, categoryDtoList.size());
     }
 
     @Test
-    public void findByName() throws Exception {
+    public void findCategoryByName() throws Exception {
         // given
         Category category = new Category();
         category.setId(ID);
@@ -57,7 +57,7 @@ public class CategoryServiceTests {
         when(this.categoryRepository.findByNameIgnoreCase(anyString())).thenReturn(Optional.of(category));
 
         // when
-        CategoryDto categoryDto = categoryService.findByName(NAME);
+        CategoryDto categoryDto = categoryService.findCategoryByName(NAME);
 
         // then
         assertEquals(ID, categoryDto.getId());

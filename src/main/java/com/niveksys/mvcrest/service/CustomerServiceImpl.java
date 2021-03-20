@@ -22,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> findAll() {
+    public List<CustomerDto> findAllCustomers() {
         return this.customerRepository.findAll().stream().map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl("/api/customers/" + customer.getId());
@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto findById(Long id) {
+    public CustomerDto findCustomerById(Long id) {
         return this.customerRepository.findById(id).map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl("/api/customers/" + customer.getId());
@@ -40,13 +40,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto create(CustomerDto customerDto) {
+    public CustomerDto createCustomer(CustomerDto customerDto) {
         Customer customer = this.customerMapper.customerDtoToCustomer(customerDto);
         return this.saveAndReturnDto(customer);
     }
 
     @Override
-    public CustomerDto update(Long id, CustomerDto customerDto) {
+    public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
         Customer customer = this.customerMapper.customerDtoToCustomer(customerDto);
         customer.setId(id);
         return this.saveAndReturnDto(customer);
@@ -60,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto patch(Long id, CustomerDto customerDto) {
+    public CustomerDto patchCustomer(Long id, CustomerDto customerDto) {
         return this.customerRepository.findById(id).map(customer -> {
             if (customerDto.getFirstname() != null) {
                 customer.setFirstname(customerDto.getFirstname());
@@ -70,5 +70,10 @@ public class CustomerServiceImpl implements CustomerService {
             }
             return this.saveAndReturnDto(customer);
         }).orElseThrow(RuntimeException::new); // todo implement better exception handling;
+    }
+
+    @Override
+    public void deleteCustomerById(Long id) {
+        this.customerRepository.deleteById(id);
     }
 }

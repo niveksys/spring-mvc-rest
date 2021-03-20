@@ -39,7 +39,7 @@ public class CategoryControllerTests {
     }
 
     @Test
-    public void list() throws Exception {
+    public void listCategories() throws Exception {
         // given
         CategoryDto category1 = new CategoryDto();
         category1.setId(1L);
@@ -51,7 +51,7 @@ public class CategoryControllerTests {
 
         List<CategoryDto> categories = Arrays.asList(category1, category2);
 
-        when(this.categoryService.findAll()).thenReturn(categories);
+        when(this.categoryService.findAllCategories()).thenReturn(categories);
 
         // when
         this.mockMvc.perform(get("/api/categories/").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -59,13 +59,13 @@ public class CategoryControllerTests {
     }
 
     @Test
-    public void showByName() throws Exception {
+    public void showCategoryByName() throws Exception {
         // given
         CategoryDto category = new CategoryDto();
         category.setId(1L);
         category.setName(NAME1);
 
-        when(this.categoryService.findByName(anyString())).thenReturn(category);
+        when(this.categoryService.findCategoryByName(anyString())).thenReturn(category);
 
         // then
         mockMvc.perform(get("/api/categories/" + NAME1).contentType(MediaType.APPLICATION_JSON))

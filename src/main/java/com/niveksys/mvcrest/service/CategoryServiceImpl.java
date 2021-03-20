@@ -21,13 +21,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> findAll() {
+    public List<CategoryDto> findAllCategories() {
         return this.categoryRepository.findAll().stream().map(this.categoryMapper::categoryToCategoryDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CategoryDto findByName(String name) {
+    public CategoryDto findCategoryByName(String name) {
         return this.categoryRepository.findByNameIgnoreCase(name).map(this.categoryMapper::categoryToCategoryDto)
                 .orElseThrow(RuntimeException::new);
     }

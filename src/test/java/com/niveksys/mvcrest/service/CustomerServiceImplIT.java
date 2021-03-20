@@ -59,7 +59,7 @@ public class CustomerServiceImplIT {
         customerDto.setFirstname(expectedFirstname);
 
         // when
-        this.customerService.patch(id, customerDto);
+        this.customerService.patchCustomer(id, customerDto);
 
         // then
         Customer updatedCustomer = this.customerRepository.findById(id).get();
@@ -84,7 +84,7 @@ public class CustomerServiceImplIT {
         customerDto.setLastname(expectedLastname);
 
         // when
-        this.customerService.patch(id, customerDto);
+        this.customerService.patchCustomer(id, customerDto);
 
         // then
         Customer updatedCustomer = this.customerRepository.findById(id).get();

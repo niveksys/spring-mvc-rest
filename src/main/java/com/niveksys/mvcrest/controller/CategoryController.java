@@ -25,15 +25,15 @@ public class CategoryController {
     }
 
     @GetMapping({ "", "/" })
-    public ResponseEntity<CatorgoryListDto> list() {
+    public ResponseEntity<CatorgoryListDto> listCategories() {
         log.debug("LIST all the product categories.");
-        return new ResponseEntity<CatorgoryListDto>(new CatorgoryListDto(this.categoryService.findAll()),
+        return new ResponseEntity<CatorgoryListDto>(new CatorgoryListDto(this.categoryService.findAllCategories()),
                 HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<CategoryDto> showByName(@PathVariable String name) {
+    public ResponseEntity<CategoryDto> showCategoryByName(@PathVariable String name) {
         log.debug("SHOW a category by name.");
-        return new ResponseEntity<CategoryDto>(this.categoryService.findByName(name), HttpStatus.OK);
+        return new ResponseEntity<CategoryDto>(this.categoryService.findCategoryByName(name), HttpStatus.OK);
     }
 }

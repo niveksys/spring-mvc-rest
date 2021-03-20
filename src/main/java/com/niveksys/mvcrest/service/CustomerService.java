@@ -6,13 +6,15 @@ import com.niveksys.mvcrest.dto.CustomerDto;
 
 public interface CustomerService {
 
-    List<CustomerDto> findAll();
+    List<CustomerDto> findAllCustomers();
 
-    CustomerDto findById(Long id);
+    CustomerDto findCustomerById(Long id);
 
-    CustomerDto create(CustomerDto customerDto);
+    CustomerDto createCustomer(CustomerDto customerDto);
 
-    CustomerDto update(Long id, CustomerDto customerDto);
+    CustomerDto updateCustomer(Long id, CustomerDto customerDto);
 
-    CustomerDto patch(Long id, CustomerDto customerDto);
+    CustomerDto patchCustomer(Long id, CustomerDto customerDto);
+
+    void deleteCustomerById(Long id);
 }
