@@ -62,7 +62,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customer2.setLastname(LASTNAME2);
         customer2.setCustomerUrl(CustomerController.BASE_URL + "/" + ID2);
 
-        when(this.customerService.findAllCustomers()).thenReturn(Arrays.asList(customer1, customer2));
+        when(this.customerService.listCustomers()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when & then
         this.mockMvc.perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
@@ -77,7 +77,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customer.setLastname(LASTNAME1);
         customer.setCustomerUrl(CustomerController.BASE_URL + "/" + ID1);
 
-        when(this.customerService.findCustomerById(anyLong())).thenReturn(customer);
+        when(this.customerService.getCustomerById(anyLong())).thenReturn(customer);
 
         // when & then
         this.mockMvc.perform(get(CustomerController.BASE_URL + "/" + ID1).contentType(MediaType.APPLICATION_JSON))
@@ -159,7 +159,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
     @Test
     public void showCustomerNotFound() throws Exception {
         // given
-        when(customerService.findCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+        when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
         // when
         mockMvc.perform(get(CustomerController.BASE_URL + "/222").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());

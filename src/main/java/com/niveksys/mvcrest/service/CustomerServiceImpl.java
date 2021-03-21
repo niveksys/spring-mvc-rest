@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> findAllCustomers() {
+    public List<CustomerDto> listCustomers() {
         return this.customerRepository.findAll().stream().map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));
@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto findCustomerById(Long id) {
+    public CustomerDto getCustomerById(Long id) {
         return this.customerRepository.findById(id).map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));

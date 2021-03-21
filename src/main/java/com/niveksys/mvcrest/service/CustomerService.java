@@ -6,9 +6,9 @@ import com.niveksys.mvcrest.dto.CustomerDto;
 
 public interface CustomerService {
 
-    List<CustomerDto> findAllCustomers();
+    List<CustomerDto> listCustomers();
 
-    CustomerDto findCustomerById(Long id);
+    CustomerDto getCustomerById(Long id);
 
     CustomerDto createCustomer(CustomerDto customerDto);
 

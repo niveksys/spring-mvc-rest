@@ -60,7 +60,7 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when
-        List<CustomerDto> customerDtoList = this.customerService.findAllCustomers();
+        List<CustomerDto> customerDtoList = this.customerService.listCustomers();
 
         // then
         assertEquals(2, customerDtoList.size());
@@ -77,7 +77,7 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(customer));
 
         // when
-        CustomerDto customerDto = this.customerService.findCustomerById(ID1);
+        CustomerDto customerDto = this.customerService.getCustomerById(ID1);
 
         // then
         assertEquals(FIRSTNAME1, customerDto.getFirstname());

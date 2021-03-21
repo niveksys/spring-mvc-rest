@@ -5,16 +5,16 @@ import com.niveksys.mvcrest.dto.CatorgoryListDto;
 import com.niveksys.mvcrest.service.CategoryService;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 
@@ -27,15 +27,16 @@ public class CategoryController {
     }
 
     @GetMapping({ "", "/" })
-    public ResponseEntity<CatorgoryListDto> listCategories() {
+    @ResponseStatus(HttpStatus.OK)
+    public CatorgoryListDto listCategories() {
         log.debug("LIST all the product categories.");
-        return new ResponseEntity<CatorgoryListDto>(new CatorgoryListDto(this.categoryService.findAllCategories()),
-                HttpStatus.OK);
+        return new CatorgoryListDto(this.categoryService.listCategories());
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<CategoryDto> showCategoryByName(@PathVariable String name) {
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDto getCategoryByName(@PathVariable String name) {
         log.debug("SHOW a category by name.");
-        return new ResponseEntity<CategoryDto>(this.categoryService.findCategoryByName(name), HttpStatus.OK);
+        return this.categoryService.getCategoryByName(name);
     }
 }

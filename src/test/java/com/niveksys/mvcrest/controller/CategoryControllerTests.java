@@ -52,7 +52,7 @@ public class CategoryControllerTests {
 
         List<CategoryDto> categories = Arrays.asList(category1, category2);
 
-        when(this.categoryService.findAllCategories()).thenReturn(categories);
+        when(this.categoryService.listCategories()).thenReturn(categories);
 
         // when
         this.mockMvc.perform(get(CategoryController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
@@ -66,7 +66,7 @@ public class CategoryControllerTests {
         category.setId(1L);
         category.setName(NAME1);
 
-        when(this.categoryService.findCategoryByName(anyString())).thenReturn(category);
+        when(this.categoryService.getCategoryByName(anyString())).thenReturn(category);
 
         // then
         mockMvc.perform(get(CategoryController.BASE_URL + "/" + NAME1).contentType(MediaType.APPLICATION_JSON))
@@ -76,7 +76,7 @@ public class CategoryControllerTests {
     @Test
     public void testGetByNameNotFound() throws Exception {
         // given
-        when(this.categoryService.findCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+        when(this.categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(CategoryController.BASE_URL + "/Foo").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
