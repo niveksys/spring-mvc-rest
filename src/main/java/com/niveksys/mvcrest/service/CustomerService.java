@@ -6,7 +6,7 @@ import com.niveksys.mvcrest.dto.CustomerDto;
 
 public interface CustomerService {
 
-    List<CustomerDto> listCustomers();
+    List<CustomerDto> getCustomerList();
 
     CustomerDto getCustomerById(Long id);
 
@@ -16,5 +16,5 @@ public interface CustomerService {
 
     CustomerDto patchCustomer(Long id, CustomerDto customerDto);
 
-    void deleteCustomerById(Long id);
+    void deleteCustomer(Long id);
 }

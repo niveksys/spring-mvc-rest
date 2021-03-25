@@ -12,6 +12,7 @@ import com.niveksys.mvcrest.mapper.CustomerMapper;
 import com.niveksys.mvcrest.model.Customer;
 import com.niveksys.mvcrest.repository.CategoryRepository;
 import com.niveksys.mvcrest.repository.CustomerRepository;
+import com.niveksys.mvcrest.repository.VendorRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ public class CustomerServiceImplIT {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    VendorRepository vendorRepository;
+
     CustomerService customerService;
 
     @BeforeEach
@@ -38,7 +42,7 @@ public class CustomerServiceImplIT {
         System.out.println(customerRepository.findAll().size());
 
         // setup data for testing
-        Bootstrap bootstrap = new Bootstrap(this.categoryRepository, this.customerRepository);
+        Bootstrap bootstrap = new Bootstrap(this.categoryRepository, this.customerRepository, this.vendorRepository);
         bootstrap.run(); // load data
 
         customerService = new CustomerServiceImpl(this.customerRepository, CustomerMapper.INSTANCE);

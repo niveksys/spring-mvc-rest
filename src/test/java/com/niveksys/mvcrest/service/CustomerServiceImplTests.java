@@ -60,7 +60,7 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when
-        List<CustomerDto> customerDtoList = this.customerService.listCustomers();
+        List<CustomerDto> customerDtoList = this.customerService.getCustomerList();
 
         // then
         assertEquals(2, customerDtoList.size());
@@ -129,7 +129,7 @@ public class CustomerServiceImplTests {
     @Test
     public void deleteCustomerById() throws Exception {
         // when
-        this.customerService.deleteCustomerById(ID1);
+        this.customerService.deleteCustomer(ID1);
         // then
         verify(this.customerRepository, times(1)).deleteById(anyLong());
     }

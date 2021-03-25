@@ -50,7 +50,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
     }
 
     @Test
-    public void listCustomers() throws Exception {
+    public void getCustomerList() throws Exception {
         // given
         CustomerDto customer1 = new CustomerDto();
         customer1.setFirstname(FIRSTNAME1);
@@ -62,7 +62,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customer2.setLastname(LASTNAME2);
         customer2.setCustomerUrl(CustomerController.BASE_URL + "/" + ID2);
 
-        when(this.customerService.listCustomers()).thenReturn(Arrays.asList(customer1, customer2));
+        when(this.customerService.getCustomerList()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when & then
         this.mockMvc.perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
@@ -153,11 +153,11 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
     public void deleteCustomer() throws Exception {
         mockMvc.perform(delete(CustomerController.BASE_URL + "/" + ID1).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        verify(customerService).deleteCustomerById(anyLong());
+        verify(customerService).deleteCustomer(anyLong());
     }
 
     @Test
-    public void showCustomerNotFound() throws Exception {
+    public void getCustomerNotFound() throws Exception {
         // given
         when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
         // when

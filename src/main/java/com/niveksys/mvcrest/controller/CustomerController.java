@@ -33,9 +33,9 @@ public class CustomerController {
 
     @GetMapping({ "", "/" })
     @ResponseStatus(HttpStatus.OK)
-    public CustomerListDto listCustomers() {
+    public CustomerListDto getCustomerList() {
         log.debug("LIST all customers.");
-        return new CustomerListDto(this.customerService.listCustomers());
+        return new CustomerListDto(this.customerService.getCustomerList());
 
     }
 
@@ -68,7 +68,7 @@ public class CustomerController {
 
     @DeleteMapping({ "/{id}" })
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCustomerById(@PathVariable Long id) {
-        this.customerService.deleteCustomerById(id);
+    public void deleteCustomer(@PathVariable Long id) {
+        this.customerService.deleteCustomer(id);
     }
 }

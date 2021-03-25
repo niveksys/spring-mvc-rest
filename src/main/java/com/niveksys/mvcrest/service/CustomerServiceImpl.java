@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> listCustomers() {
+    public List<CustomerDto> getCustomerList() {
         return this.customerRepository.findAll().stream().map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));
@@ -74,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomerById(Long id) {
+    public void deleteCustomer(Long id) {
         this.customerRepository.deleteById(id);
     }
 

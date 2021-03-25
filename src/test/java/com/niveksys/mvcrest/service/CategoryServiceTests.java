@@ -41,7 +41,7 @@ public class CategoryServiceTests {
         when(this.categoryRepository.findAll()).thenReturn(categories);
 
         // when
-        List<CategoryDto> categoryDtoList = categoryService.listCategories();
+        List<CategoryDto> categoryDtoList = categoryService.getCategoryList();
 
         // then
         assertEquals(3, categoryDtoList.size());
