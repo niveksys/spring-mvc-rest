@@ -40,7 +40,7 @@ public class CategoryControllerTests {
     }
 
     @Test
-    public void getCategoryList() throws Exception {
+    public void getAllCategories() throws Exception {
         // given
         CategoryDto category1 = new CategoryDto();
         category1.setId(1L);
@@ -52,7 +52,7 @@ public class CategoryControllerTests {
 
         List<CategoryDto> categories = Arrays.asList(category1, category2);
 
-        when(this.categoryService.getCategoryList()).thenReturn(categories);
+        when(this.categoryService.getAllCategories()).thenReturn(categories);
 
         // when
         this.mockMvc.perform(get(CategoryController.BASE_URL).contentType(MediaType.APPLICATION_JSON))

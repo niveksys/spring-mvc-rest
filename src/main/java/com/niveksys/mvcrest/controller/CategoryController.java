@@ -28,9 +28,9 @@ public class CategoryController {
 
     @GetMapping({ "", "/" })
     @ResponseStatus(HttpStatus.OK)
-    public CatorgoryListDto getCategoryList() {
+    public CatorgoryListDto getAllCategories() {
         log.debug("LIST all the product categories.");
-        return new CatorgoryListDto(this.categoryService.getCategoryList());
+        return new CatorgoryListDto(this.categoryService.getAllCategories());
     }
 
     @GetMapping("/{name}")

@@ -50,7 +50,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
     }
 
     @Test
-    public void getCustomerList() throws Exception {
+    public void getAllCustomers() throws Exception {
         // given
         CustomerDto customer1 = new CustomerDto();
         customer1.setFirstname(FIRSTNAME1);
@@ -62,7 +62,7 @@ public class CustomerControllerTests extends AbstractRestControllerTest {
         customer2.setLastname(LASTNAME2);
         customer2.setCustomerUrl(CustomerController.BASE_URL + "/" + ID2);
 
-        when(this.customerService.getCustomerList()).thenReturn(Arrays.asList(customer1, customer2));
+        when(this.customerService.getAllCustomers()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when & then
         this.mockMvc.perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))

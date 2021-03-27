@@ -6,7 +6,7 @@ import com.niveksys.mvcrest.dto.CategoryDto;
 
 public interface CategoryService {
 
-    List<CategoryDto> getCategoryList();
+    List<CategoryDto> getAllCategories();
 
     CategoryDto getCategoryByName(String name);
 

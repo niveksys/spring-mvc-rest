@@ -45,7 +45,7 @@ public class CustomerServiceImplTests {
     }
 
     @Test
-    public void findAllCustomers() throws Exception {
+    public void getAllCustomers() throws Exception {
         // given
         Customer customer1 = new Customer();
         customer1.setId(ID1);
@@ -60,14 +60,14 @@ public class CustomerServiceImplTests {
         when(this.customerRepository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
 
         // when
-        List<CustomerDto> customerDtoList = this.customerService.getCustomerList();
+        List<CustomerDto> customerDtoList = this.customerService.getAllCustomers();
 
         // then
         assertEquals(2, customerDtoList.size());
     }
 
     @Test
-    public void findCustomerById() throws Exception {
+    public void getCustomerById() throws Exception {
         // given
         Customer customer = new Customer();
         customer.setId(ID1);

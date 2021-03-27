@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> getCustomerList() {
+    public List<CustomerDto> getAllCustomers() {
         return this.customerRepository.findAll().stream().map(customer -> {
             CustomerDto customerDto = this.customerMapper.customerToCustomerDto(customer);
             customerDto.setCustomerUrl(this.getCustomerUrl(customer.getId()));

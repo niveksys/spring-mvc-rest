@@ -35,13 +35,13 @@ public class CategoryServiceTests {
     }
 
     @Test
-    public void findAllCategories() throws Exception {
+    public void getAllCategories() throws Exception {
         // given
         List<Category> categories = Arrays.asList(new Category(), new Category(), new Category());
         when(this.categoryRepository.findAll()).thenReturn(categories);
 
         // when
-        List<CategoryDto> categoryDtoList = categoryService.getCategoryList();
+        List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
 
         // then
         assertEquals(3, categoryDtoList.size());
