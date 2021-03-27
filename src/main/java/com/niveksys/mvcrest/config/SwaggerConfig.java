@@ -17,8 +17,9 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any()).build().pathMapping("/").apiInfo(metaData());
+        return new Docket(DocumentationType.SWAGGER_2).select()
+                .apis(RequestHandlerSelectors.basePackage("com.niveksys.mvcrest.controller")).paths(PathSelectors.any())
+                .build().pathMapping("/").apiInfo(metaData());
     }
 
     private ApiInfo metaData() {

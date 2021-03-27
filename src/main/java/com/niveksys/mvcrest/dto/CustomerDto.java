@@ -20,4 +20,5 @@ public class CustomerDto {
 
     @JsonProperty("customer_url")
     private String customerUrl;
+
 }

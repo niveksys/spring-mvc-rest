@@ -5,7 +5,7 @@ import com.niveksys.mvcrest.dto.VendorListDto;
 
 public interface VendorService {
 
-    VendorListDto getVendorList();
+    VendorListDto getAllVendors();
 
     VendorDto getVendorById(Long id);
 

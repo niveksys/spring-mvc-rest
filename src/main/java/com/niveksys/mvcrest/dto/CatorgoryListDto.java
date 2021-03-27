@@ -8,7 +8,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CatorgoryListDto {
-
     List<CategoryDto> categories;
-
 }

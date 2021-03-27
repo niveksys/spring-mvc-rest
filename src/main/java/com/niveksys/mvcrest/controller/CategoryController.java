@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+@Api(value = "categories", description = "Category API")
 @Slf4j
 @RestController
 @RequestMapping(CategoryController.BASE_URL)
@@ -26,17 +29,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping({ "", "/" })
+    @ApiOperation(value = "GET all the categories.")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CatorgoryListDto getAllCategories() {
-        log.debug("LIST all the product categories.");
+        log.debug("GET all the categories.");
         return new CatorgoryListDto(this.categoryService.getAllCategories());
     }
 
+    @ApiOperation(value = "GET a category by name.")
     @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto getCategoryByName(@PathVariable String name) {
-        log.debug("SHOW a category by name.");
+        log.debug("GET a category by name: " + name);
         return this.categoryService.getCategoryByName(name);
     }
 }

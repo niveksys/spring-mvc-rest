@@ -47,13 +47,13 @@ public class VendorServiceImplTests {
     }
 
     @Test
-    public void getVendorList() throws Exception {
+    public void getAllVendors() throws Exception {
         // given
         List<Vendor> vendors = Arrays.asList(this.getVendor1(), this.getVendor2());
         given(this.vendorRepository.findAll()).willReturn(vendors);
 
         // when
-        VendorListDto vendorListDto = this.vendorService.getVendorList();
+        VendorListDto vendorListDto = this.vendorService.getAllVendors();
 
         // then
         then(this.vendorRepository).should(times(1)).findAll();

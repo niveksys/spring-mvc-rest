@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-@Api(description = "Customers")
+@Api(value = "customers", description = "Customer API")
 @Slf4j
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
@@ -34,8 +34,8 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @ApiOperation(value = "GET all the customers.", notes = "GET all the customers.")
-    @GetMapping("")
+    @ApiOperation(value = "GET all the customers.")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDto getAllCustomers() {
         log.debug("GET all the customers.");
@@ -43,7 +43,7 @@ public class CustomerController {
 
     }
 
-    @ApiOperation(value = "GET a customer by id.", notes = "GET a customer by id.")
+    @ApiOperation(value = "GET a customer by id.")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomerById(@PathVariable Long id) {
@@ -51,8 +51,8 @@ public class CustomerController {
         return this.customerService.getCustomerById(id);
     }
 
-    @ApiOperation(value = "CREATE a new customer.", notes = "CREATE a new customer.")
-    @PostMapping("")
+    @ApiOperation(value = "CREATE a new customer.")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
         log.debug("CREATE a new customer.");
@@ -75,7 +75,7 @@ public class CustomerController {
         return this.customerService.patchCustomer(id, customerDto);
     }
 
-    @ApiOperation(value = "DELETE a customer by id.", notes = "DELETE a customer by id.")
+    @ApiOperation(value = "DELETE a customer by id.")
     @DeleteMapping({ "/{id}" })
     @ResponseStatus(HttpStatus.OK)
     public void deleteCustomer(@PathVariable Long id) {

@@ -52,11 +52,11 @@ public class VendorControllerTests extends AbstractRestControllerTest {
     }
 
     @Test
-    public void getVendorList() throws Exception {
+    public void getAllVendors() throws Exception {
         // given
         VendorListDto vendorListDto = new VendorListDto(Arrays.asList(this.vendorDto1, this.vendorDto2));
 
-        given(this.vendorService.getVendorList()).willReturn(vendorListDto);
+        given(this.vendorService.getAllVendors()).willReturn(vendorListDto);
 
         // when
         this.mockMvc.perform(get(VendorController.BASE_URL).contentType(MediaType.APPLICATION_JSON))

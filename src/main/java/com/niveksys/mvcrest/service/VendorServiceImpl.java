@@ -24,7 +24,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public VendorListDto getVendorList() {
+    public VendorListDto getAllVendors() {
         List<VendorDto> vendorDtoList = this.vendorRepository.findAll().stream().map(vendor -> {
             VendorDto vendorDto = this.vendorMapper.vendorToVendorDto(vendor);
             vendorDto.setVendorUrl(this.getVendorUrl(vendor.getId()));
